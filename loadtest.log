@@ -1,0 +1,35 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: loadtest.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 5 max VUs, 1m0s max duration (incl. graceful stop):
+              * fast: 100 iterations shared among 5 VUs (maxDuration: 30s, gracefulStop: 30s)
+
+→    ✓ status is 200
+→    ✓ latency is less than 1ms
+
+→    checks.........................: 100.00% ✓ 200          ✗ 0  
+→    data_received..................: 6.3 kB  1.5 MB/s
+→    data_sent......................: 7.4 kB  1.8 MB/s
+→    http_req_blocked...............: min=591ns   avg=20.12µs  max=394.27µs p(95)=75.59µs  p(99)=346.55µs
+→    http_req_connecting............: min=0s      avg=2.75µs   max=100.59µs p(95)=1.14µs   p(99)=66.67µs 
+→  ✓ http_req_duration..............: min=28.43µs avg=101.29µs max=518.39µs p(95)=221.48µs p(99)=300.83µs
+→      { expected_response:true }...: min=28.43µs avg=101.29µs max=518.39µs p(95)=221.48µs p(99)=300.83µs
+→    http_req_failed................: 0.00%   ✓ 0            ✗ 100
+→    http_req_receiving.............: min=4.2µs   avg=30.46µs  max=494.14µs p(95)=89.95µs  p(99)=260.26µs
+→    http_req_sending...............: min=1.7µs   avg=9.25µs   max=59.42µs  p(95)=29.63µs  p(99)=56.23µs 
+→    http_req_tls_handshaking.......: min=0s      avg=0s       max=0s       p(95)=0s       p(99)=0s      
+→    http_req_waiting...............: min=16.07µs avg=61.57µs  max=229.36µs p(95)=116.9µs  p(99)=164.68µs
+→    http_reqs......................: 100     23753.691324/s
+→    iteration_duration.............: min=46.93µs avg=193.04µs max=728.54µs p(95)=586.31µs p(99)=717.67µs
+→    iterations.....................: 100     23753.691324/s
+running (0m00.0s), 0/5 VUs, 100 complete and 0 interrupted iterations
+fast ✓ [ 100% ] 5 VUs  00.0s/30s  100/100 shared iters
