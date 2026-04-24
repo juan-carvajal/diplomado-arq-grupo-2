@@ -1,0 +1,31 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:v3.6.1
+    environment:
+      - DOCKER_API_VERSION=1.44
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"  # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock.raw:/var/run/docker.sock:ro
+
+  go-service:
+    build: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.goservice.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.goservice.entrypoints=web"
+      - "traefik.http.services.goservice.loadbalancer.server.port=3000"
+      # Rate limit: 15 requests per second (avg), with burst of 2000
+      - "traefik.http.middlewares.ratelimit.ratelimit.average=15"
+      - "traefik.http.middlewares.ratelimit.ratelimit.period=1s"
+      - "traefik.http.middlewares.ratelimit.ratelimit.burst=2000"
+      - "traefik.http.routers.goservice.middlewares=ratelimit"
